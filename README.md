@@ -4,7 +4,7 @@ Uncle Bob' Bowling Game Kata: http://butunclebob.com/ArticleS.UncleBob.TheBowlin
 
 Clojure: https://clojure.org/
 
-All code is in `core_test.clj`.
+All code is in `test/bowlinggamekata/core_test.clj`.
 
 ## Usage
 
