@@ -85,8 +85,9 @@
     (is (= false (strike? [3 2])))))
 
 (deftest score-frame-test
-  (testing "in general the score is the value of the two rolls"
-    (is (= 7 (score-frame [[3 4]] 0))))
+  (testing "for a normal frame the score is the value of the two rolls"
+    (is (= 7 (score-frame [[3 4] [4 5]] 0)))
+    (is (= 9 (score-frame [[3 4] [4 5]] 1))))
   (testing "for a spare the bonus is the value of the next roll"
     (is (= 11 (score-frame [[3 7] [1 5]] 0))))
   (testing "for a strike the bonus is the value of the next 2 rolls"
