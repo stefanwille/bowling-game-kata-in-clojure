@@ -2,32 +2,40 @@
   (:require [clojure.test :refer :all]
             [bowlinggamekata.core :refer :all]))
 
-(defn pin-value [frame]
+(defn pin-value 
+  "Adds the pins in the given frame"
+  [frame]
   (reduce + frame))
 
-(defn spare? [frame] (and (= (count frame) 2) (= (pin-value frame) 10)))
+(defn spare? 
+  "Tests if the given frame is a spare"
+  [frame] (and (= (count frame) 2) (= (pin-value frame) 10)))
 
-(defn strike? [frame] (= frame [10]))
+(defn strike? 
+  "Tests if the given frame is a strike"
+  [frame] (= frame [10]))
 
 (defn next-n-rolls
-  "return the next n rolls starting from the given frame"
+  "Return the next n rolls starting from the given frame"
   [n game frame-index] (take n (flatten (drop frame-index game))))
 
 (defn value-of-next-n-rolls
-  "the sum of the next n rolls"
+  "Return the sum of the next n rolls"
   [n game frame-index]
   (let
    [sum (reduce + (next-n-rolls n game frame-index))]
     sum))
 
 (defn frame-bonus
-  "returns the bonus for the given frame"
+  "Returns the bonus for the given frame"
   [game frame-index frame]
   (cond (spare? frame) (value-of-next-n-rolls 1 game (+ frame-index 1))
         (strike? frame) (value-of-next-n-rolls 2 game (+ frame-index 1))
         :else 0))
 
-(defn score-frame [game frame-index]
+(defn score-frame 
+  "Returns the score for the given frame, which is the sum of all pins plus the bonus"
+  [game frame-index]
   (let [frame (nth game frame-index)
         pinvalue (pin-value frame)
         bonus (frame-bonus game frame-index frame)]
