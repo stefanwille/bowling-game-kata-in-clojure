@@ -2,16 +2,16 @@
   (:require [clojure.test :refer :all]
             [bowlinggamekata.core :refer :all]))
 
-(defn pin-value 
+(defn pin-value
   "Adds the pins in the given frame"
   [frame]
   (reduce + frame))
 
-(defn spare? 
+(defn spare?
   "Tests if the given frame is a spare"
   [frame] (and (= (count frame) 2) (= (pin-value frame) 10)))
 
-(defn strike? 
+(defn strike?
   "Tests if the given frame is a strike"
   [frame] (= frame [10]))
 
@@ -33,13 +33,24 @@
         (strike? frame) (value-of-next-n-rolls 2 game (+ frame-index 1))
         :else 0))
 
-(defn score-frame 
+(defn score-frame
   "Returns the score for the given frame, which is the sum of all pins plus the bonus"
   [game frame-index]
   (let [frame (nth game frame-index)
         pinvalue (pin-value frame)
         bonus (frame-bonus game frame-index frame)]
     (+ pinvalue bonus)))
+
+(defn score-game
+  "Scores each frame and returns the cumulated scores"
+  [game]
+  (let
+   [score-indexed-frame (fn [frame-index frame] (score-frame game frame-index))
+    scores-per-frame (map-indexed score-indexed-frame game)
+    sum-frame (fn [accu item] (if (empty? accu) [item] (conj accu (+ (last accu) item))))
+    cumulated-scores (reduce sum-frame [] scores-per-frame)
+    scores-for-first-10-frames (take 10 cumulated-scores)]
+    scores-for-first-10-frames))
 
 (deftest next-n-rolls-test
   (testing "with 2 rolls in 1 frame"
@@ -80,3 +91,9 @@
     (is (= 11 (score-frame [[3 7] [1 5]] 0))))
   (testing "for a strike the bonus is the value of the next 2 rolls"
     (is (= 17 (score-frame [[10] [3 4]] 0)))))
+
+(deftest score-game-test
+  (testing "the game from the Powerpoint"
+    (let [game [[1 4] [4 5] [6 4] [5 5] [10] [0 1] [7 3] [6 4] [10] [2 8] [6]]
+          expected-scores  [5 14 29 49 60 61 77 97 117 133]]
+      (is (= expected-scores (score-game game))))))
