@@ -1,44 +1,22 @@
-# bowlinggamekata
+# Bowling Game Kata in Clojure
 
-FIXME: description
+Uncle Bob' Bowling Game Kata: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
 
-## Installation
+Clojure: https://clojure.org/
 
-Download from http://example.com/FIXME.
+All code is in `core_test.clj`.
 
 ## Usage
 
-FIXME: explanation
+Run with
 
-    $ java -jar bowlinggamekata-0.1.0-standalone.jar [args]
+```
+$ lein test
+```
 
-## Options
+or
 
-FIXME: listing of options this app accepts.
+```
+$ lein auto test
+```
 
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2019 FIXME
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
